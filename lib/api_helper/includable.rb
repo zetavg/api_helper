@@ -142,8 +142,8 @@ module APIHelper::Includable
   # +resource+::
   #   +Symbol+ name of resource to receive the inclusion
   def inclusion_for(resource, root: false, default_includes: [])
-    @inclusion ||= Hashie::Mash.new
-    @meta ||= Hashie::Mash.new
+    @inclusion ||= ActiveSupport::HashWithIndifferentAccess.new
+    @meta ||= ActiveSupport::HashWithIndifferentAccess.new
 
     # put the includes in place
     if params[:include].is_a? Hash

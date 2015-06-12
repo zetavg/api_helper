@@ -122,8 +122,8 @@ module APIHelper::Fieldsettable
   #     #                :group => [:id, :name]
   #     #              }
   def fieldset_for(resource, root: false, permitted_fields: [], show_all_permitted_fields_by_default: false, default_fields: [])
-    @fieldset ||= Hashie::Mash.new
-    @meta ||= Hashie::Mash.new
+    @fieldset ||= ActiveSupport::HashWithIndifferentAccess.new
+    @meta ||= ActiveSupport::HashWithIndifferentAccess.new
 
     # put the fields in place
     if params[:fields].is_a? Hash
