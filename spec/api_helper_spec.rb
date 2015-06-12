@@ -1,11 +1,7 @@
 require 'spec_helper'
 
-describe ApiHelper do
+describe APIHelper do
   it 'has a version number' do
-    expect(ApiHelper::VERSION).not_to be nil
-  end
-
-  it 'does something useful' do
-    expect(false).to eq(true)
+    expect(APIHelper::VERSION).not_to be nil
   end
 end
