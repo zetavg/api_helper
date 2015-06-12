@@ -1,4 +1,4 @@
-# APIHelper
+# APIHelper [![Gem Version](https://badge.fury.io/rb/api_helper.svg)](http://badge.fury.io/rb/api_helper) [![Build Status](https://travis-ci.org/Neson/api_helper.svg?branch=master)](https://travis-ci.org/Neson/api_helper)
 
 Helpers for creating standard RESTful API for Rails or Grape with Active Record.
 
@@ -8,7 +8,7 @@ Helpers for creating standard RESTful API for Rails or Grape with Active Record.
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'APIHelper'
+gem 'api_helper'
 ```
 
 And then execute:
@@ -17,7 +17,7 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install APIHelper
+    $ gem install api_helper
 
 
 ## API Standards
@@ -62,7 +62,7 @@ PostsController < ApplicationController
 end
 ```
 
-Further usage of each helper can be found in the docs.
+Further usage of each helper can be found in the [docs](http://www.rubydoc.info/github/Neson/api_helper/master/APIHelper).
 
 ### Grape
 
@@ -79,7 +79,7 @@ class PostsAPI < Grape::API
 end
 ```
 
-Further usage of each helper can be found in the docs.
+Further usage of each helper can be found in the [docs](http://www.rubydoc.info/github/Neson/api_helper/master/APIHelper).
 
 
 ## Development
@@ -91,4 +91,4 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/Neson/APIHelper.
+Bug reports and pull requests are welcome on GitHub at https://github.com/Neson/api_helper.
