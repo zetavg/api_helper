@@ -1,7 +1,8 @@
 require 'active_record'
 
 class ActiveRecord::Base
-  establish_connection 'sqlite3:tmp/db.sqlite3'
+  establish_connection adapter: 'sqlite3',
+                       database: 'tmp/db.sqlite3'
 end
 
 class Model < ActiveRecord::Base
