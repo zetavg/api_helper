@@ -97,7 +97,7 @@ require 'active_support'
 #
 #   resources :posts do
 #     get do
-#       inclusion_for :post, root: true
+#       inclusion_for :post, default: true
 #       # ...
 #     end
 #   end
@@ -141,14 +141,14 @@ module APIHelper::Includable
   #
   # +resource+::
   #   +Symbol+ name of resource to receive the inclusion
-  def inclusion_for(resource, root: false, default_includes: [])
+  def inclusion_for(resource, default: false, default_includes: [])
     @inclusion ||= ActiveSupport::HashWithIndifferentAccess.new
     @meta ||= ActiveSupport::HashWithIndifferentAccess.new
 
     # put the includes in place
     if params[:include].is_a? Hash
       @inclusion[resource] = params[:include][resource] || params[:include][resource]
-    elsif root
+    elsif default
       @inclusion[resource] = params[:include]
     end
 
