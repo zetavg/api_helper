@@ -111,4 +111,4 @@ describe APIHelper::Fieldsettable do
       end
     end
   end
-end
+end if defined?(Rails)

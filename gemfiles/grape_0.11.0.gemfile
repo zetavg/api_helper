@@ -2,7 +2,7 @@
 
 source "https://rubygems.org"
 
-gem "rails", "4.2.0"
-gem "rspec-rails"
+gem "grape", "0.11.0"
+gem "rack-test"
 
 gemspec :path => "../"

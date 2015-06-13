@@ -6,4 +6,5 @@ gemfile:
   - gemfiles/rails_4.0.0.gemfile
   - gemfiles/rails_4.1.8.gemfile
   - gemfiles/rails_4.2.0.gemfile
+  - gemfiles/grape_0.11.0.gemfile
 before_install: gem install bundler -v 1.10.2

@@ -1,4 +1,5 @@
 require 'active_support'
+require 'active_support/core_ext/object/blank'
 
 # = Fieldsettable
 #
@@ -40,7 +41,7 @@ require 'active_support'
 # or in your Grape API class:
 #
 #   class SampleAPI < Grape::API
-#     include APIHelper::Fieldsettable
+#     helpers APIHelper::Fieldsettable
 #   end
 #
 # Then set fieldset with +fieldset_for+ for each resource in the controller:
