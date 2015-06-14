@@ -1,6 +1,6 @@
 require 'active_support'
 
-# = Helper To Make Resource APIs Sortable
+# = Sortable
 #
 # A Sortable Resource API gives the flexibility to change how the returned data
 # is sorted to the client. Clients can use the +sort+ URL parameter to control
@@ -22,7 +22,7 @@ require 'active_support'
 # or in your Grape API class:
 #
 #   class SampleAPI < Grape::API
-#     include APIHelper::Sortable
+#     helpers APIHelper::Sortable
 #   end
 #
 # then use the +sortable+ method like this:
@@ -30,15 +30,16 @@ require 'active_support'
 #   resources :posts do
 #     get do
 #       sortable default_order: { created_at: :desc }
-#       # ...
-#       @posts = Post.order(sort)#...
+#       @posts = Post.order(sortable_sort)
+#
 #       # ...
 #     end
 #   end
+#
 module APIHelper::Sortable
   extend ActiveSupport::Concern
 
-  # Gets the `sort` parameter with the format 'resourses?sort=-created_at,name',
+  # Gets the +sort+ parameter with the format 'resourses?sort=-created_at,name',
   # verify and converts it into an safe Hash that can be passed into the .order
   # method.
   #
@@ -46,31 +47,32 @@ module APIHelper::Sortable
   #
   # +default_order+::
   #   +Hash+ the default value to return if the sort parameter is not provided
+  #
   def sortable(default_order: {})
     # get the parameter
     sort_by = params[:sort] || params[:sort_by]
 
-    if sort_by.is_a? String
+    if sort_by.is_a?(String)
       # split it
       sort_by_attrs = sort_by.gsub(/[^a-zA-Z0-9\-_,]/, '').split(',')
 
       # save it
-      @sort = {}
+      @sortable_sort = {}
       sort_by_attrs.each do |attrb|
         if attrb.match(/^-/)
-          @sort[attrb.gsub(/^-/, '')] = :desc
+          @sortable_sort[attrb.gsub(/^-/, '')] = :desc
         else
-          @sort[attrb] = :asc
+          @sortable_sort[attrb] = :asc
         end
       end
     else
-      @sort = default_order
+      @sortable_sort = default_order
     end
   end
 
   # Helper to get the sort data
-  def sort
-    @sort
+  def sortable_sort
+    @sortable_sort
   end
 
   # Return the 'sort' param description

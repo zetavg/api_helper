@@ -7,8 +7,7 @@ describe APIHelper::Filterable do
       include APIHelper::Filterable
 
       def index
-        collection =
-          filter(Model.all)
+        collection = filter(Model.all)
         render json: collection
       end
     end
