@@ -1,21 +1,21 @@
 require 'active_support'
 
-# = Helper To Make Resource APIs Paginatable
+# = Paginatable
 #
-# Paginating the requested items can avoid returning too much information
-# in a single response. API callers can iterate over the results using
-# pagination instead of rerteving all the data in one time, ruining the
-# database connection or network.
+# Paginating the requested items can avoid returning too much data in a single
+# response. API clients can iterate over the results with pagination instead of
+# rerteving all the data in one time, ruining the database connection or
+# network.
 #
-# There are two parameters clients can use: +per_page+ and +page+. The former
-# is used for setting how many data will be returned in each page, there will
+# There are two available URL parameters: +per_page+ and +page+. The former is
+# used for setting how many resources will be returned in each page, there will
 # be a maxium limit and default value for each API:
 #
 #   GET /posts?per_page=10
 #
-# <em>The server will respond 10 items at a time.</em>
+# <em>The server will respond 10 resources in a request.</em>
 #
-# Use the +page+ parameter to specify which to retrieve:
+# Use the +page+ parameter to specify which to page get:
 #
 #   GET /posts?page=5
 #
@@ -30,6 +30,9 @@ require 'active_support'
 #
 # Which follows the proposed RFC 5988 standard.
 #
+# An aditional header, +X-Items-Count+, will also be set to the total pages
+# count.
+#
 # == Usage
 #
 # Include this +Concern+ in your Action Controller:
@@ -41,85 +44,104 @@ require 'active_support'
 # or in your Grape API class:
 #
 #   class SampleAPI < Grape::API
-#     include APIHelper::Paginatable
+#     helpers APIHelper::Paginatable
 #   end
 #
-# then set the options for pagination in the grape method:
+# then set the options for pagination in the grape method, as the following as
+# an example:
 #
 #   resources :posts do
 #     get do
-#       pagination User.count, default_per_page: 25, maxium_per_page: 100
+#       collection = current_user.posts
+#       pagination collection.count, default_per_page: 25, maxium_per_page: 100
 #
 #       # ...
 #     end
 #   end
 #
-# Then use the helper methods, like this:
+# Then use the helper methods like this:
 #
+#   # this example uses kaminari
 #   User.page(page).per(per_page)
 #
-# HTTP Link header will be automatically set.
+# HTTP Link header will be automatically set by the way.
 module APIHelper::Paginatable
   extend ActiveSupport::Concern
 
-  def pagination(items_count, default_per_page: 20, maxium_per_page: 100, set_header: true)
+  # Set pagination for the request
+  #
+  # Params:
+  #
+  # +items_count+::
+  #   +Symbol+ name of resource to receive the inclusion
+  #
+  # +default_per_page+::
+  #   +Integer+ default per_page
+  #
+  # +maxium_per_page+::
+  #   +Integer+ maximum results do return on a single page
+  #
+  def pagination(items_count, default_per_page: 20,
+                              maxium_per_page: 100,
+                              set_header: true)
     items_count = items_count.count if items_count.respond_to? :count
 
-    @per_page = (params[:per_page] || default_per_page).to_i
-    @per_page = maxium_per_page if @per_page > maxium_per_page
-    @per_page = 1 if @per_page < 1
+    @pagination_per_page = (params[:per_page] || default_per_page).to_i
+    @pagination_per_page = maxium_per_page if @pagination_per_page > maxium_per_page
+    @pagination_per_page = 1 if @pagination_per_page < 1
 
     items_count = 0 if items_count < 0
-    pages_count = (items_count.to_f / @per_page).ceil
+    pages_count = (items_count.to_f / @pagination_per_page).ceil
     pages_count = 1 if pages_count < 1
 
-    @page = (params[:page] || 1).to_i
-    @page = pages_count if @page > pages_count
-    @page = 1 if @page < 1
-
-    link_headers ||= []
-
-    if current_page < pages_count
-      link_headers << "<#{add_or_replace_uri_param(request.url, :page, current_page + 1)}>; rel=\"next\""
-      link_headers << "<#{add_or_replace_uri_param(request.url, :page, pages_count)}>; rel=\"last\""
-    end
-    if current_page > 1
-      link_headers << "<#{add_or_replace_uri_param(request.url, :page, (current_page > pages_count ? pages_count : current_page - 1))}>; rel=\"prev\""
-      link_headers << "<#{add_or_replace_uri_param(request.url, :page, 1)}>; rel=\"first\""
-    end
-
-    link_header = link_headers.join(', ')
+    @pagination_page = (params[:page] || 1).to_i
+    @pagination_page = pages_count if @pagination_page > pages_count
+    @pagination_page = 1 if @pagination_page < 1
 
     if set_header
+      link_headers ||= []
+
+      if current_page > 1
+        link_headers << "<#{add_or_replace_uri_param(request.url, :page, 1)}>; rel=\"first\""
+        link_headers << "<#{add_or_replace_uri_param(request.url, :page, (current_page > pages_count ? pages_count : current_page - 1))}>; rel=\"prev\""
+      end
+
+      if current_page < pages_count
+        link_headers << "<#{add_or_replace_uri_param(request.url, :page, current_page + 1)}>; rel=\"next\""
+        link_headers << "<#{add_or_replace_uri_param(request.url, :page, pages_count)}>; rel=\"last\""
+      end
+
+      link_header = link_headers.join(', ')
+
       if self.respond_to?(:header)
         self.header('Link', link_header)
         self.header('X-Items-Count', items_count.to_s)
+        self.header('X-Pages-Count', pages_count.to_s)
       end
 
       if defined?(response) && response.respond_to?(:headers)
         response.headers['Link'] = link_header
         response.headers['X-Items-Count'] = items_count.to_s
+        response.headers['X-Pages-Count'] = pages_count.to_s
       end
     end
-
-    link_header
   end
 
   # Getter for the current page
-  def page
-    @page
+  def pagination_page
+    @pagination_page
   end
 
-  alias_method :current_page, :page
+  alias_method :current_page, :pagination_page
 
   # Getter for per_page
-  def per_page
-    @per_page
+  def pagination_per_page
+    @pagination_per_page
   end
 
-  alias_method :page_with, :per_page
+  alias_method :paginate_with, :pagination_per_page
 
-  def add_or_replace_uri_param(url, param_name, param_value)
+  def add_or_replace_uri_param(url, param_name, param_value) # :nodoc:
     uri = URI(url)
     params = URI.decode_www_form(uri.query || '')
     params.delete_if { |param| param[0].to_s == param_name.to_s }

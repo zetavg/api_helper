@@ -162,7 +162,7 @@ require 'active_support'
 module APIHelper::Includable
   extend ActiveSupport::Concern
 
-  # Gets the include parameters, organize them into a +@inclusion+ hash.
+  # Gets the include parameters, organize them into a +@inclusion+ hash
   #
   # Params:
   #
@@ -226,7 +226,7 @@ module APIHelper::Includable
     end
   end
 
-  # Getter for the inclusion data.
+  # Getter for the inclusion data
   #
   # This method will act as a traditional getter of the inclusion data and
   # returns a hash containing fields for each resource if no parameter is

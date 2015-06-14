@@ -1,4 +1,4 @@
-require 'rails_helper'
+require 'grape_helper'
 
 describe APIHelper::Multigettable do
   context "used in a Grape app" do
