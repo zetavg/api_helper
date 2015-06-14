@@ -15,7 +15,7 @@ describe APIHelper::Fieldsettable do
         end
       end
 
-      it "parses the currect fieldsets for each resource" do
+      it "parses the fieldsets for each resource" do
         # GET /?fields[post]=title,author&fields[user]=name
         get :index, fields: { post: 'title,author', user: 'name' }
 

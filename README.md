@@ -1,4 +1,4 @@
-# APIHelper [![Gem Version](https://badge.fury.io/rb/api_helper.svg)](http://badge.fury.io/rb/api_helper) [![Build Status](https://travis-ci.org/Neson/api_helper.svg?branch=master)](https://travis-ci.org/Neson/api_helper)
+# APIHelper [![Gem Version](https://badge.fury.io/rb/api_helper.svg)](http://badge.fury.io/rb/api_helper) [![Build Status](https://travis-ci.org/Neson/api_helper.svg?branch=master)](https://travis-ci.org/Neson/api_helper) [![Docs Status](https://inch-ci.org/github/Neson/api_helper.svg?branch=master)](https://inch-ci.org/github/Neson/api_helper)
 
 Helpers for creating standard RESTful API for Rails or Grape with Active Record.
 

@@ -4,7 +4,7 @@ describe APIHelper::Fieldsettable do
   context "used in a Grape app" do
     include Rack::Test::Methods
 
-    class API < Grape::API
+    class FieldsettableAPI < Grape::API
       helpers APIHelper::Fieldsettable
 
       resources :posts do
@@ -22,7 +22,7 @@ describe APIHelper::Fieldsettable do
     end
 
     def app
-      API
+      FieldsettableAPI
     end
 
     it "parses the currect fieldsets for each resource" do

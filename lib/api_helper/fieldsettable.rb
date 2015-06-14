@@ -65,7 +65,7 @@ require 'active_support/core_ext/object/blank'
 #   end
 #
 # The +fieldset_for+ method used above parses the +fields+ and/or
-# <tt>fields[object_type]</tt> parameters, and save the results into
+# <tt>fields[resource_name]</tt> parameters, and save the results into
 # +@fieldset+ instance variable for further usage.
 #
 # After that line, you can use the +fieldset+ helper method to get the fieldset
@@ -138,7 +138,8 @@ module APIHelper::Fieldsettable
   #   +Symbol+ name of resource to receive the fieldset
   #
   # +default+::
-  #   +Boolean+ should this resource take the parameter from +fields+ while no type is specified
+  #   +Boolean+ should this resource take the parameter from +fields+ while no
+  #             resourse name is specified?
   #
   # +permitted_fields+::
   #   +Array+ of +Symbol+s list of accessible fields used to filter out unpermitted fields,
@@ -148,8 +149,8 @@ module APIHelper::Fieldsettable
   #   +Array+ of +Symbol+s list of fields to show by default
   #
   # +defaults_to_permitted_fields+::
-  #   +Boolean+ if set to true, @fieldset will be set to all permitted_fields when the current
-  #   resource's fieldset isn't specified
+  #   +Boolean+ if set to true, @fieldset will be set to all permitted_fields
+  #   when the current resource's fieldset isn't specified
   #
   # Example Result:
   #
@@ -166,7 +167,6 @@ module APIHelper::Fieldsettable
                              defaults_to_permitted_fields: false,
                              default_fields: [])
     @fieldset ||= ActiveSupport::HashWithIndifferentAccess.new
-    @meta ||= ActiveSupport::HashWithIndifferentAccess.new
 
     # put the fields in place
     if params[:fields].is_a?(Hash)
@@ -221,7 +221,7 @@ module APIHelper::Fieldsettable
 
     # returns the fieldset array if an specific resource is passed in
     elsif field.blank?
-      fieldset[resource] ||= []
+      fieldset[resource] || []
 
     # determine if a field is inculded in a specific fieldset
     else
@@ -230,7 +230,7 @@ module APIHelper::Fieldsettable
     end
   end
 
-  # View Helper to set the default and permitted fields.
+  # View Helper to set the default and permitted fields
   #
   # This is useful while using an resource view shared by multiple controllers,
   # it will ensure the +@fieldset+ instance variable presents, and can also set

@@ -4,7 +4,7 @@ describe APIHelper::Filterable do
   context "used in a Grape app" do
     include Rack::Test::Methods
 
-    class API < Grape::API
+    class FilterableAPI < Grape::API
       helpers APIHelper::Filterable
 
       resources :resources do
@@ -16,7 +16,7 @@ describe APIHelper::Filterable do
     end
 
     def app
-      API
+      FilterableAPI
     end
 
     it "filters out resource with a matching attribute" do
@@ -180,7 +180,7 @@ describe APIHelper::Filterable do
 
     context "with filterable fields specified" do
 
-      class APIv2 < Grape::API
+      class FilterableAPIv2 < Grape::API
         helpers APIHelper::Filterable
 
         resources :resources do
@@ -193,7 +193,7 @@ describe APIHelper::Filterable do
       end
 
       def app
-        APIv2
+        FilterableAPIv2
       end
 
       it "is only filterable with filterable fields" do
