@@ -269,6 +269,7 @@ module APIHelper::Includable
   def set_inclusion(resource, default_includes: [], permitted_includes: [])
     @inclusion ||= ActiveSupport::HashWithIndifferentAccess.new
     @inclusion_field ||= ActiveSupport::HashWithIndifferentAccess.new
+    @inclusion_specified ||= ActiveSupport::HashWithIndifferentAccess.new
     @inclusion[resource] = default_includes.map(&:to_s) if @inclusion[resource].blank? &&
                                                            !@inclusion_specified[resource]
     @inclusion[resource] &= permitted_includes.map(&:to_s) if permitted_includes.present?

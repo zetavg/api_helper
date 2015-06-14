@@ -62,7 +62,7 @@ require 'active_support'
 # Then use the helper methods like this:
 #
 #   # this example uses kaminari
-#   User.page(page).per(per_page)
+#   User.page(pagination_per_page).per(pagination_page)
 #
 # HTTP Link header will be automatically set by the way.
 module APIHelper::Paginatable
