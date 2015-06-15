@@ -28,6 +28,8 @@ describe APIHelper::Fieldsettable do
         expect(controller.fieldset('post', :author)).to be true
         expect(controller.fieldset('post', 'author')).to be true
         expect(controller.fieldset(:post, :content)).to be false
+
+        expect(controller.fieldset(:nothing)).to eq([])
       end
 
       it "parses the currect fieldsets for the default resource" do

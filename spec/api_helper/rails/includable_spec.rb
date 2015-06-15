@@ -26,6 +26,8 @@ describe APIHelper::Includable do
       expect(controller.inclusion('post', :author)).to be true
       expect(controller.inclusion('post', 'author')).to be true
       expect(controller.inclusion(:post, :board)).to be false
+
+      expect(controller.inclusion(:nothing)).to eq([])
     end
 
     it "parses the currect fieldsets for the default resource" do
@@ -228,6 +230,8 @@ describe APIHelper::Includable do
                  'resource_name' => :user,
                  'resources_url' => '/users'
                })
+
+          expect(controller.inclusion_field(:nothing)).to eq({})
         end
       end
     end

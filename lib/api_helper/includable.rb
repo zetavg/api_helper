@@ -328,7 +328,7 @@ module APIHelper::Includable
 
     # returns the inclusion array if an specific resource is passed in
     else
-      inclusion_field[resource] || []
+      inclusion_field[resource] || {}
     end
   end
 
