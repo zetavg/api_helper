@@ -310,6 +310,24 @@ module APIHelper::Includable
     }
   end
 
+  # Getter for the data of includable fields
+  #
+  # Params:
+  #
+  # +resource+::
+  #   +Symbol+ the resource name of inclusion data to retrieve
+  #
+  def inclusion_field(resource = nil)
+    # act as a traditional getter if no parameters specified
+    if resource.blank?
+      @inclusion_field ||= ActiveSupport::HashWithIndifferentAccess.new
+
+    # returns the inclusion array if an specific resource is passed in
+    else
+      inclusion_field[resource] || []
+    end
+  end
+
   # Returns the description of the 'include' URL parameter
   def self.include_param_desc(example: nil, default: nil)
     if default.present?
@@ -327,7 +345,7 @@ module APIHelper::Includable
 
   included do
     if defined? helper_method
-      helper_method :inclusion, :set_inclusion, :set_inclusion_field
+      helper_method :inclusion, :set_inclusion, :set_inclusion_field, :inclusion_field
     end
   end
 end

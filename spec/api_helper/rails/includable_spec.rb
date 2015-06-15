@@ -178,6 +178,48 @@ describe APIHelper::Includable do
                })
         end
       end
+
+      describe "inclusion_field" do
+        it "get the properties of includable fields" do
+          # These methods are normally called in the view
+          controller.set_inclusion_field :post, :comments, :comment_ids,
+                                         resource_name: :comment,
+                                         resources_url: '/comments'
+          controller.set_inclusion_field :post, :author, :author_id,
+                                         resource_name: :user,
+                                         resources_url: '/users'
+
+          expect(controller.inclusion_field).to \
+            eq('post' => {
+                 'comments' => {
+                   'field' => :comments,
+                   'id_field' => :comment_ids,
+                   'resource_name' => :comment,
+                   'resources_url' => '/comments'
+                 },
+                 'author' => {
+                   'field' => :author,
+                   'id_field' => :author_id,
+                   'resource_name' => :user,
+                   'resources_url' => '/users'
+                 }
+               })
+
+          expect(controller.inclusion_field(:post)).to \
+            eq('comments' => {
+                 'field' => :comments,
+                 'id_field' => :comment_ids,
+                 'resource_name' => :comment,
+                 'resources_url' => '/comments'
+               },
+               'author' => {
+                 'field' => :author,
+                 'id_field' => :author_id,
+                 'resource_name' => :user,
+                 'resources_url' => '/users'
+               })
+        end
+      end
     end
   end
 end if defined?(Rails)
