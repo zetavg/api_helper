@@ -1,6 +1,31 @@
-# APIHelper [![Gem Version](https://badge.fury.io/rb/api_helper.svg)](http://badge.fury.io/rb/api_helper) [![Build Status](https://travis-ci.org/Neson/api_helper.svg?branch=master)](https://travis-ci.org/Neson/api_helper) [![Docs Status](https://inch-ci.org/github/Neson/api_helper.svg?branch=master)](https://inch-ci.org/github/Neson/api_helper)
+# APIHelper [![Gem Version](https://badge.fury.io/rb/api_helper.svg)](http://badge.fury.io/rb/api_helper) [![Build Status](https://travis-ci.org/Neson/api_helper.svg?branch=master)](https://travis-ci.org/Neson/api_helper) [![Coverage Status](https://coveralls.io/repos/Neson/api_helper/badge.svg?branch=master)](https://coveralls.io/r/Neson/api_helper?branch=master) [![Docs Status](https://inch-ci.org/github/Neson/api_helper.svg?branch=master)](https://inch-ci.org/github/Neson/api_helper)
 
 Helpers for creating standard RESTful API for Rails or Grape with Active Record.
+
+
+## API Standards
+
+<dl>
+
+  <dt><a href="http://www.rubydoc.info/github/Neson/api_helper/master/APIHelper/Fieldsettable">Fieldsettable</a></dt>
+  <dd>Let clients choose the fields they wanted to be returned with the <code>fields</code> query parameter, making their API calls optimizable to gain efficiency and speed.</dd>
+
+  <dt><a href="http://www.rubydoc.info/github/Neson/api_helper/master/APIHelper/Includable">Includable</a></dt>
+  <dd>Clients can use the <code>include</code> query parameter to enable inclusion of related items - for instance, get the author's data along with a post.</dd>
+
+  <dt><a href="http://www.rubydoc.info/github/Neson/api_helper/master/APIHelper/Paginatable">Paginatable</a></dt>
+  <dd>Paginate the results of a resource collection, client can get a specific page with the <code>page</code> query parameter and set a custom page size with the "per_page" query parameter.</dd>
+
+  <dt><a href="http://www.rubydoc.info/github/Neson/api_helper/master/APIHelper/Sortable">Sortable</a></dt>
+  <dd>Client can set custom sorting with the <code>sort</code> query parameter while getting a resource collection.</dd>
+
+  <dt><a href="http://www.rubydoc.info/github/Neson/api_helper/master/APIHelper/Filterable">Filterable</a></dt>
+  <dd>Enables clients to filter through a resource collection with their fields with the <code>filter</code> query parameter.</dd>
+
+  <dt><a href="http://www.rubydoc.info/github/Neson/api_helper/master/APIHelper/Multigettable">Multigettable</a></dt>
+  <dd>Let Client execute operations on multiple resources with a single request.</dd>
+
+</dl>
 
 
 ## Installation
@@ -14,35 +39,6 @@ gem 'api_helper'
 And then execute:
 
     $ bundle
-
-Or install it yourself as:
-
-    $ gem install api_helper
-
-
-## API Standards
-
-<dl>
-
-  <dt><a href="http://www.rubydoc.info/github/Neson/api_helper/master/APIHelper/Fieldsettable" target="_blank">Fieldsettable</a></dt>
-  <dd>Let clients choose the fields they wanted to be returned with the "fields" query parameter, making their API calls optimizable to gain efficiency and speed.</dd>
-
-  <dt><a href="http://www.rubydoc.info/github/Neson/api_helper/master/APIHelper/Includable" target="_blank">Includable</a></dt>
-  <dd>Clients can use the "include" query parameter to enable inclusion of related items - for instance, get the author's data along with a post.</dd>
-
-  <dt><a href="http://www.rubydoc.info/github/Neson/api_helper/master/APIHelper/Paginatable" target="_blank">Paginatable</a></dt>
-  <dd>Paginate the results of a resource collection, client can get a specific page with the "page" query parameter and set a custom page size with the "per_page" query parameter.</dd>
-
-  <dt><a href="http://www.rubydoc.info/github/Neson/api_helper/master/APIHelper/Sortable" target="_blank">Sortable</a></dt>
-  <dd>Client can set custom sorting with the "sort" query parameter while getting a resource collection.</dd>
-
-  <dt><a href="http://www.rubydoc.info/github/Neson/api_helper/master/APIHelper/Filterable" target="_blank">Filterable</a></dt>
-  <dd>Enables clients to filter through a resource collection with their fields.</dd>
-
-  <dt><a href="http://www.rubydoc.info/github/Neson/api_helper/master/APIHelper/Multigettable" target="_blank">Multigettable</a></dt>
-  <dd>Let Client execute operations on multiple resources with a single request.</dd>
-
-</dl>
 
 
 ## Usage
