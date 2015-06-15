@@ -109,6 +109,16 @@ describe APIHelper::Includable do
         expect(controller.fieldset(:post)).to eq(['title', 'author', 'comments'])
       end
 
+      it "ignores default inclusion fields not listed in fieldset" do
+        # GET /?fields=title,author,comments
+        get :index, fields: 'title,author'
+        # This method is normally be called in the view
+        controller.set_inclusion :post,
+                                 default_includes: [:author, :comments]
+        expect(controller.inclusion(:post, :author)).to be true
+        expect(controller.inclusion(:post, :comments)).to be false
+      end
+
       it "includes fields by default" do
         # GET /?fields=title,author,comments
         get :index, fields: 'title,author,comments'

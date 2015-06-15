@@ -273,6 +273,10 @@ module APIHelper::Includable
     @inclusion[resource] = default_includes.map(&:to_s) if @inclusion[resource].blank? &&
                                                            !@inclusion_specified[resource]
     @inclusion[resource] &= permitted_includes.map(&:to_s) if permitted_includes.present?
+
+    if @fieldset.is_a?(Hash) && @fieldset[resource].present?
+      @inclusion[resource] &= @fieldset[resource]
+    end
   end
 
   # View Helper to set the inclusion details
