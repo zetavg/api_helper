@@ -94,21 +94,34 @@ module APIHelper::Paginatable
     pages_count = (items_count.to_f / @pagination_per_page).ceil
     pages_count = 1 if pages_count < 1
 
+    @pagination_items_count = items_count
+    @pagination_pages_count = pages_count
+
     @pagination_page = (params[:page] || 1).to_i
     @pagination_page = pages_count if @pagination_page > pages_count
     @pagination_page = 1 if @pagination_page < 1
+
+    if current_page > 1
+      @pagination_first_page_url = add_or_replace_uri_param(request.url, :page, 1)
+      @pagination_prev_page_url = add_or_replace_uri_param(request.url, :page, (current_page > pages_count ? pages_count : current_page - 1))
+    end
+
+    if current_page < pages_count
+      @pagination_next_page_url = add_or_replace_uri_param(request.url, :page, current_page + 1)
+      @pagination_last_page_url = add_or_replace_uri_param(request.url, :page, pages_count)
+    end
 
     if set_header
       link_headers ||= []
 
       if current_page > 1
-        link_headers << "<#{add_or_replace_uri_param(request.url, :page, 1)}>; rel=\"first\""
-        link_headers << "<#{add_or_replace_uri_param(request.url, :page, (current_page > pages_count ? pages_count : current_page - 1))}>; rel=\"prev\""
+        link_headers << "<#{@pagination_first_page_url}>; rel=\"first\"" if @pagination_first_page_url
+        link_headers << "<#{@pagination_prev_page_url}>; rel=\"prev\"" if @pagination_prev_page_url
       end
 
       if current_page < pages_count
-        link_headers << "<#{add_or_replace_uri_param(request.url, :page, current_page + 1)}>; rel=\"next\""
-        link_headers << "<#{add_or_replace_uri_param(request.url, :page, pages_count)}>; rel=\"last\""
+        link_headers << "<#{@pagination_next_page_url}>; rel=\"next\"" if @pagination_next_page_url
+        link_headers << "<#{@pagination_last_page_url}>; rel=\"last\"" if @pagination_last_page_url
       end
 
       link_header = link_headers.join(', ')
@@ -137,6 +150,30 @@ module APIHelper::Paginatable
   # Getter for per_page
   def pagination_per_page
     @pagination_per_page
+  end
+
+  def pagination_items_count
+    @pagination_items_count
+  end
+
+  def pagination_pages_count
+    @pagination_pages_count
+  end
+
+  def pagination_first_page_url
+    @pagination_first_page_url
+  end
+
+  def pagination_prev_page_url
+    @pagination_prev_page_url
+  end
+
+  def pagination_next_page_url
+    @pagination_next_page_url
+  end
+
+  def pagination_last_page_url
+    @pagination_last_page_url
   end
 
   alias_method :paginate_with, :pagination_per_page
