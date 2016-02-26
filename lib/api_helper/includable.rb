@@ -192,7 +192,8 @@ module APIHelper::Includable
     @inclusion_specified ||= ActiveSupport::HashWithIndifferentAccess.new
 
     # put the fields in place
-    if params[:include].is_a?(Hash)
+    if params[:include].is_a?(Hash) ||
+       defined?(Rails) && Rails.version.to_i >= 5 && params[:include].is_a?(ActionController::Parameters)
       # get the specific resource inclusion fields from the "include" hash
       @inclusion[resource] = params[:include][resource]
       @inclusion_specified[resource] = true if params[:include][resource].present?

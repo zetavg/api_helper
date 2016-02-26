@@ -73,7 +73,8 @@ module APIHelper::Filterable
   #
   def filter(resource, filterable_fields: [])
     # parse the request parameter
-    if params[:filter].is_a?(Hash)
+    if params[:filter].is_a?(Hash) ||
+       defined?(Rails) && Rails.version.to_i >= 5 && params[:filter].is_a?(ActionController::Parameters)
       @filter = params[:filter]
       filterable_fields = filterable_fields.map(&:to_s)
 

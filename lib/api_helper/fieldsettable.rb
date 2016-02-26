@@ -169,7 +169,8 @@ module APIHelper::Fieldsettable
     @fieldset ||= ActiveSupport::HashWithIndifferentAccess.new
 
     # put the fields in place
-    if params[:fields].is_a?(Hash)
+    if params[:fields].is_a?(Hash) ||
+       defined?(Rails) && Rails.version.to_i >= 5 && params[:fields].is_a?(ActionController::Parameters)
       # get the specific resource fields from fields hash
       @fieldset[resource] = params[:fields][resource] || params[:fields][resource]
     elsif default
