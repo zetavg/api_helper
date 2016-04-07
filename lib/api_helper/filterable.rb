@@ -91,6 +91,14 @@ module APIHelper::Filterable
 
         # if a function is used
         if func = condition.match(/(?<function>[^\(\)]+)\((?<param>.*)\)/)
+
+          db_column_name = begin
+            raise if ActiveRecord::Base.configurations[Rails.env]['adapter'] != 'mysql2'
+            "`#{resource.table_name}`.`#{field}`"
+          rescue
+            "\"#{resource.table_name}\".\"#{field}\""
+          end
+
           case func[:function]
           when 'not'
             values = func[:param].split(',')
@@ -99,38 +107,38 @@ module APIHelper::Filterable
 
           when 'greater_then'
             resource = resource
-                       .where("\"#{resource.table_name}\".\"#{field}\" > ?",
+                       .where("#{db_column_name} > ?",
                               func[:param])
 
           when 'less_then'
             resource = resource
-                       .where("\"#{resource.table_name}\".\"#{field}\" < ?",
+                       .where("#{db_column_name} < ?",
                               func[:param])
 
           when 'greater_then_or_equal'
             resource = resource
-                       .where("\"#{resource.table_name}\".\"#{field}\" >= ?",
+                       .where("#{db_column_name} >= ?",
                               func[:param])
 
           when 'less_then_or_equal'
             resource = resource
-                       .where("\"#{resource.table_name}\".\"#{field}\" <= ?",
+                       .where("#{db_column_name} <= ?",
                               func[:param])
 
           when 'between'
             param = func[:param].split(',')
             resource = resource
-                       .where("\"#{resource.table_name}\".\"#{field}\" BETWEEN ? AND ?",
+                       .where("#{db_column_name} BETWEEN ? AND ?",
                               param.first, param.last)
 
           when 'like'
             resource = resource
-                       .where("\"#{resource.table_name}\".\"#{field}\" LIKE ?",
+                       .where("#{db_column_name} LIKE ?",
                               func[:param])
 
           when 'contains'
             resource = resource
-                       .where("\"#{resource.table_name}\".\"#{field}\" LIKE ?",
+                       .where("#{db_column_name} LIKE ?",
                               "%#{func[:param]}%")
 
           when 'null'
