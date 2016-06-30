@@ -40,7 +40,7 @@ require 'active_support/core_ext/object/blank'
 # Include this +Concern+ in your Action Controller:
 #
 #   SamplesController < ApplicationController
-#     include APIHelpers::Filterable
+#     include APIHelper::Filterable
 #   end
 #
 # or in your Grape API class:

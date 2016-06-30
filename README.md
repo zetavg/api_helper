@@ -49,9 +49,9 @@ Include each helper concern you need in an `ActionController::Base`:
 
 ```ruby
 PostsController < ApplicationController
-  include APIHelpers::Filterable
-  include APIHelpers::Paginatable
-  include APIHelpers::Sortable
+  include APIHelper::Filterable
+  include APIHelper::Paginatable
+  include APIHelper::Sortable
 
   # ...
 
@@ -66,9 +66,9 @@ Set the helpers you need in an `Grape::API`:
 
 ```ruby
 class PostsAPI < Grape::API
-  helpers APIHelpers::Filterable
-  helpers APIHelpers::Paginatable
-  helpers APIHelpers::Sortable
+  helpers APIHelper::Filterable
+  helpers APIHelper::Paginatable
+  helpers APIHelper::Sortable
 
   # ...
 
