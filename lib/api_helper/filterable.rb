@@ -71,7 +71,7 @@ module APIHelper::Filterable
   #   +Array+ of +Symbol+s fields that are allowed to be filtered, defaults
   #   to all
   #
-  def filter(resource, filterable_fields: [])
+  def filter(resource, filterable_fields: [], ignore_unknown_fields: true)
     # parse the request parameter
     if params[:filter].is_a?(Hash) ||
        defined?(Rails) && Rails.version.to_i >= 5 && params[:filter].is_a?(ActionController::Parameters)
@@ -86,8 +86,8 @@ module APIHelper::Filterable
         # escape string to prevent SQL injection
         field = resource.connection.quote_string(field)
 
-        next if resource.columns_hash[field].blank?
-        field_type = resource.columns_hash[field].type
+        next if ignore_unknown_fields && resource.columns_hash[field].blank?
+        field_type = resource.columns_hash[field] && resource.columns_hash[field].type || :unknown
 
         # if a function is used
         if func = condition.match(/(?<function>[^\(\)]+)\((?<param>.*)\)/)
