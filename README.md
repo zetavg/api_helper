@@ -7,22 +7,22 @@ Helpers for creating standard RESTful API for Rails or Grape with Active Record.
 
 <dl>
 
-  <dt><a href="http://www.rubydoc.info/github/Neson/api_helper/master/APIHelper/Fieldsettable">Fieldsettable</a></dt>
+  <dt><a href="http://www.rubydoc.info/github/zetavg/api_helper/master/APIHelper/Fieldsettable">Fieldsettable</a></dt>
   <dd>Let clients choose the fields they wanted to be returned with the <code>fields</code> query parameter, making their API calls optimizable to gain efficiency and speed.</dd>
 
-  <dt><a href="http://www.rubydoc.info/github/Neson/api_helper/master/APIHelper/Includable">Includable</a></dt>
+  <dt><a href="http://www.rubydoc.info/github/zetavg/api_helper/master/APIHelper/Includable">Includable</a></dt>
   <dd>Clients can use the <code>include</code> query parameter to enable inclusion of related items - for instance, get the author's data along with a post.</dd>
 
-  <dt><a href="http://www.rubydoc.info/github/Neson/api_helper/master/APIHelper/Paginatable">Paginatable</a></dt>
+  <dt><a href="http://www.rubydoc.info/github/zetavg/api_helper/master/APIHelper/Paginatable">Paginatable</a></dt>
   <dd>Paginate the results of a resource collection, client can get a specific page with the <code>page</code> query parameter and set a custom page size with the "per_page" query parameter.</dd>
 
-  <dt><a href="http://www.rubydoc.info/github/Neson/api_helper/master/APIHelper/Sortable">Sortable</a></dt>
+  <dt><a href="http://www.rubydoc.info/github/zetavg/api_helper/master/APIHelper/Sortable">Sortable</a></dt>
   <dd>Client can set custom sorting with the <code>sort</code> query parameter while getting a resource collection.</dd>
 
-  <dt><a href="http://www.rubydoc.info/github/Neson/api_helper/master/APIHelper/Filterable">Filterable</a></dt>
+  <dt><a href="http://www.rubydoc.info/github/zetavg/api_helper/master/APIHelper/Filterable">Filterable</a></dt>
   <dd>Enables clients to filter through a resource collection with their fields with the <code>filter</code> query parameter.</dd>
 
-  <dt><a href="http://www.rubydoc.info/github/Neson/api_helper/master/APIHelper/Multigettable">Multigettable</a></dt>
+  <dt><a href="http://www.rubydoc.info/github/zetavg/api_helper/master/APIHelper/Multigettable">Multigettable</a></dt>
   <dd>Let Client execute operations on multiple resources with a single request.</dd>
 
 </dl>
@@ -58,7 +58,7 @@ PostsController < ApplicationController
 end
 ```
 
-Further usage of each helper can be found in the [docs](http://www.rubydoc.info/github/Neson/api_helper/master/APIHelper).
+Further usage of each helper can be found in the [docs](http://www.rubydoc.info/github/zetavg/api_helper/master/APIHelper).
 
 ### Grape
 
@@ -75,7 +75,7 @@ class PostsAPI < Grape::API
 end
 ```
 
-Further usage of each helper can be found in the [docs](http://www.rubydoc.info/github/Neson/api_helper/master/APIHelper).
+Further usage of each helper can be found in the [docs](http://www.rubydoc.info/github/zetavg/api_helper/master/APIHelper).
 
 
 ## Development
